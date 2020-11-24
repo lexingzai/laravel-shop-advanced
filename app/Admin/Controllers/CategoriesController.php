@@ -32,7 +32,9 @@ class CategoriesController extends AdminController
         $grid->is_directory('是否目录')->display(function ($value) {
             return $value ? '是' : '否';
         });
-        $grid->path('类目路径');
+        $grid->path('类目路径')->display(function ($value) {
+            return $this->full_name;
+        });
         $grid->actions(function ($actions) {
             // 不展示 Laravel-Admin 默认的查看按钮
             $actions->disableView();
@@ -77,7 +79,8 @@ class CategoriesController extends AdminController
         // 用户输入的值通过 q 参数获取
         $search = $request->input('q');
         $result = Category::query()
-            ->where('is_directory', true)  // 由于这里选择的是父类目，因此需要限定 is_directory 为 true
+            // 通过 is_directory 参数来控制
+            ->where('is_directory', boolval($request->input('is_directory', true)))
             ->where('name', 'like', '%'.$search.'%')
             ->paginate();
 
