@@ -18,7 +18,7 @@ abstract class CommonProductsController extends AdminController
 
     // 定义一个抽象方法，各个类型的控制器将实现本方法来定义列表应该展示哪些字段
     abstract protected function customGrid(Grid $grid);
-    
+
     protected function grid()
     {
         $grid = new Grid(new Product());
