@@ -52,4 +52,5 @@ class InstallmentItem extends Model
     {
         return Carbon::now()->gt($this->due_date);
     }
+
 }
